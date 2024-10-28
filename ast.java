@@ -167,6 +167,21 @@ class FormalsListNode extends ASTnode {
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("(");
+        boolean first = true;
+        try {
+            for (myFormals.start(); myFormals.isCurrent(); myFormals.advance()) {
+                if (!first) {
+                    p.print(", ");
+                }
+                ((FormalDeclNode)myFormals.getCurrent()).decompile(p, indent);
+                first = false;
+            }
+        } catch (NoCurrentException ex) {
+            System.err.println("unexpected NoCurrentException in FormalsListNode.print");
+            System.exit(-1);
+        }
+        p.print(")");
     }
 
   // sequence of kids (FormalDeclNodes)
@@ -259,6 +274,15 @@ class MethodDeclNode extends DeclNode {
     }
 
     public void decompile(PrintWriter p, int indent) {
+        doIndent(p, indent);
+        p.print("public static ");
+        myId.decompile(p, indent);
+        myFormalsList.decompile(p, indent);
+        p.println(" {");
+        doIndent(p, indent+2);
+        p.println("thats where the body should be");
+        doIndent(p, indent);
+        p.println("}");
     }
 
     // 3 kids
@@ -274,6 +298,10 @@ class FormalDeclNode extends DeclNode {
     }
 
     public void decompile(PrintWriter p, int indent) {
+        myType.decompile(p, indent);
+        p.print(" ");
+        myId.decompile(p, indent);
+
     }
 
     // 2 kids
@@ -303,6 +331,7 @@ class BooleanNode extends TypeNode
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("boolean");
     }
 }
 
@@ -312,6 +341,7 @@ class StringNode extends TypeNode
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("String");
     }
 }
 
