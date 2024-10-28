@@ -157,7 +157,7 @@ formalDecl ::= type:t id:i
              :}
              ;
 methodBody ::= LCURLY varDeclList RCURLY;
-
+//this does not work yet since the constructor for the mehtodBody has not yet been called
 varDeclList ::= varDeclList:vdl varDecl:vd
 		{: vdl.addToEnd(vd);
 		   RESULT = vdl;
