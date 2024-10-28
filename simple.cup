@@ -76,6 +76,8 @@ non terminal FormalsListNode  formals;
 non terminal FormalDeclNode 	  formalDecl;
 non terminal Sequence		  formalsList;
 non terminal MethodBodyNode   methodBody;
+non terminal Sequence		  varDeclList;
+non terminal VarDeclNode	  varDecl;
  
 /* Precedences */
 precedence left AND, OR;
@@ -145,7 +147,7 @@ formalsList ::= formalDecl:fd
 				RESULT = seq; 
               :}
               | formalDecl:fd COMMA formalsList:fl
-              {: fl.addToEnd(fd); 
+              {: fl.addToFront(fd); 
 			  	RESULT = fl;
               :}
               ;
@@ -154,7 +156,22 @@ formalDecl ::= type:t id:i
              {: RESULT = new FormalDeclNode(t, i); 
              :}
              ;
-methodBody ::= LCURLY RCURLY;
+methodBody ::= LCURLY varDeclList RCURLY;
+
+varDeclList ::= varDeclList:vdl varDecl:vd
+		{: vdl.addToEnd(vd);
+		   RESULT = vdl;
+		:}
+		| /* epsilon */
+		{: RESULT = new Sequence();
+		:}
+		;
+
+varDecl ::= type:t id:i SEMICOLON
+		{: RESULT = new VarDeclNode(t, i);
+		:}
+		;
+	
 
 type		::= INT
 		{: RESULT = new IntNode();

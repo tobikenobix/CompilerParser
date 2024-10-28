@@ -195,6 +195,7 @@ class MethodBodyNode extends ASTnode {
     }
 
     public void decompile(PrintWriter p, int indent) {
+        myDeclList.decompile(p, indent);
     }
 
     // 2 kids
@@ -258,6 +259,11 @@ class VarDeclNode extends DeclNode {
     }
 
     public void decompile(PrintWriter p, int indent) {
+        doIndent(p, indent);
+        myType.decompile(p, indent);
+        p.print(" ");
+        myId.decompile(p, indent);
+        p.println(";");
     }
 
     // 2 kids
@@ -281,6 +287,7 @@ class MethodDeclNode extends DeclNode {
         p.println(" {");
         doIndent(p, indent+2);
         p.println("thats where the body should be");
+        myBody.decompile(p, indent+2);
         doIndent(p, indent);
         p.println("}");
     }
