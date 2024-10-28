@@ -28,12 +28,12 @@ terminal TokenVal       FALSE;
 terminal TokenVal       IF;
 terminal TokenVal       ELSE;
 terminal TokenVal       WHILE;
-terminal TokenVal 	DO;
+terminal TokenVal 		DO;
 terminal TokenVal       PRINT;
 terminal TokenVal       RETURN;
 terminal IdTokenVal     ID;
 terminal IntLitTokenVal INTLITERAL;
-terminal StrLitTokenVal STRINGLITERAL;
+terminal StringTokenVal STRINGLITERAL;
 terminal TokenVal       LCURLY;
 terminal TokenVal       RCURLY;
 terminal TokenVal       LPAREN;
@@ -54,6 +54,10 @@ terminal TokenVal       LESS;
 terminal TokenVal       GREATER;
 terminal TokenVal       LESSEQ;
 terminal TokenVal       GREATEREQ;
+terminal TokenVal	    SWITCH;
+terminal TokenVal	    CASE;
+terminal TokenVal	    DEFAULT;
+terminal TokenVal	    UMINUS;
 
 /* Non-terminals
  *
@@ -67,7 +71,18 @@ non terminal DeclNode	      decl;
 non terminal FieldDeclNode    fieldDecl;
 non terminal TypeNode	      type;
 non terminal IdNode	      id;
+non terminal MethodDeclNode   methodDecl;
+non terminal FormalsListNode  formals;
+non terminal FormalDeclNode 	  formalDecl;
+non terminal Sequence		  formalsList;
  
+/* Precedences */
+precedence left AND, OR;
+precedence nonassoc EQUALS, NOTEQUALS, LESS, GREATER, LESSEQ, GREATEREQ;
+precedence left PLUS, MINUS;
+precedence left TIMES, DIVIDE;
+precedence right NOT, UMINUS;
+
 start with program;
 
 /*
@@ -104,8 +119,44 @@ fieldDecl	::= STATIC type:t id:i SEMICOLON
 		:}
 		;
 
+/* methodDecl ::= PUBLIC STATIC VOID id:i formals:f methodBody:mb 
+		{: RESULT = new MethodDeclNode(i, f, mb);}
+		| PUBLIC STATIC INT id:i formals:f methodBody:mb
+		{: RESULT = new MethodDeclNode(i, f, mb);}
+		;
+*/
+formals ::= LPAREN RPAREN
+		{: RESULT = new FormalsListNode(new Sequence());
+		:}
+		| LPAREN formalsList:fl RPAREN
+		{: RESULT = new FormalsListNode(fl);
+		:}
+		;
+
+formalsList ::= formalDecl:fd
+              {: Sequence seq = new Sequence();
+			  	seq.addToEnd(fd);
+				RESULT = seq; 
+              :}
+              | formalDecl:fd COMMA formalsList:fl
+              {: fl.addToEnd(fd); 
+			  	RESULT = fl;
+              :}
+              ;
+
+formalDecl ::= type:t id:i
+             {: RESULT = new FormalDeclNode(t, i); 
+             :}
+             ;
+
 type		::= INT
 		{: RESULT = new IntNode();
+		:}
+		| BOOLEAN
+		{: RESULT = new BooleanNode();
+		:}
+		| STRING
+		{: RESULT = new StringNode();
 		:}
 		;
 
