@@ -75,6 +75,7 @@ non terminal MethodDeclNode   methodDecl;
 non terminal FormalsListNode  formals;
 non terminal FormalDeclNode 	  formalDecl;
 non terminal Sequence		  formalsList;
+non terminal MethodBodyNode   methodBody;
  
 /* Precedences */
 precedence left AND, OR;
@@ -112,6 +113,9 @@ declList 	::= declList:dl decl:d
 decl		::= fieldDecl:v
 		{: RESULT = v;
 		:}
+		| methodDecl:m
+		{: RESULT = m;
+		:}
 		;
 
 fieldDecl	::= STATIC type:t id:i SEMICOLON
@@ -119,12 +123,14 @@ fieldDecl	::= STATIC type:t id:i SEMICOLON
 		:}
 		;
 
-/* methodDecl ::= PUBLIC STATIC VOID id:i formals:f methodBody:mb 
-		{: RESULT = new MethodDeclNode(i, f, mb);}
+ methodDecl ::= PUBLIC STATIC VOID id:i formals:f methodBody:mb 
+		{: RESULT = new MethodDeclNode(i, f, mb);
+		:}
 		| PUBLIC STATIC INT id:i formals:f methodBody:mb
-		{: RESULT = new MethodDeclNode(i, f, mb);}
+		{: RESULT = new MethodDeclNode(i, f, mb);
+		:}
 		;
-*/
+
 formals ::= LPAREN RPAREN
 		{: RESULT = new FormalsListNode(new Sequence());
 		:}
@@ -148,6 +154,7 @@ formalDecl ::= type:t id:i
              {: RESULT = new FormalDeclNode(t, i); 
              :}
              ;
+methodBody ::= LCURLY RCURLY;
 
 type		::= INT
 		{: RESULT = new IntNode();
