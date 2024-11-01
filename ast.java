@@ -189,13 +189,14 @@ class FormalsListNode extends ASTnode {
 }
 
 class MethodBodyNode extends ASTnode {
-    public MethodBodyNode(DeclListNode declList, StmtListNode stmtList) {
+    public MethodBodyNode(DeclListNode declList , StmtListNode stmtList) {
 	myDeclList = declList;
 	myStmtList = stmtList;
     }
 
     public void decompile(PrintWriter p, int indent) {
         myDeclList.decompile(p, indent);
+        myStmtList.decompile(p, indent);
     }
 
     // 2 kids
@@ -285,8 +286,6 @@ class MethodDeclNode extends DeclNode {
         myId.decompile(p, indent);
         myFormalsList.decompile(p, indent);
         p.println(" {");
-        doIndent(p, indent+2);
-        p.println("thats where the body should be");
         myBody.decompile(p, indent+2);
         doIndent(p, indent);
         p.println("}");
@@ -454,6 +453,7 @@ class ReturnStmtNode extends StmtNode {
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.println("return");
     }
 }
 

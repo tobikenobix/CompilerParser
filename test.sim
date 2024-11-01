@@ -9,6 +9,8 @@ public class test {
     }
     //test void function with args
     public static void funco (boolean c, int a, String b) {
-
+        String hello;
+        boolean isItTrue;
+        int numb;
     }
 }

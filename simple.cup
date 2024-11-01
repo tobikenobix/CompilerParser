@@ -1,7 +1,7 @@
 /**********************************************************************
  Java CUP specification for a parser for Simple programs
  **********************************************************************/
-
+//this is the correct version
 import java_cup.runtime.*;
 
 parser code {:
@@ -78,6 +78,8 @@ non terminal Sequence		  formalsList;
 non terminal MethodBodyNode   methodBody;
 non terminal Sequence		  varDeclList;
 non terminal VarDeclNode	  varDecl;
+non terminal Sequence		  stmtList;
+non terminal StmtNode		stmt;
  
 /* Precedences */
 precedence left AND, OR;
@@ -156,8 +158,13 @@ formalDecl ::= type:t id:i
              {: RESULT = new FormalDeclNode(t, i); 
              :}
              ;
-methodBody ::= LCURLY varDeclList RCURLY;
-//this does not work yet since the constructor for the mehtodBody has not yet been called
+
+//this does not work yet since stamtement list is not defined yet
+methodBody ::= LCURLY  varDeclList:vdl stmtList:sl RCURLY
+		{: RESULT = new MethodBodyNode(new DeclListNode(vdl), new StmtListNode(sl));
+		:}
+		;
+
 varDeclList ::= varDeclList:vdl varDecl:vd
 		{: vdl.addToEnd(vd);
 		   RESULT = vdl;
@@ -171,8 +178,18 @@ varDecl ::= type:t id:i SEMICOLON
 		{: RESULT = new VarDeclNode(t, i);
 		:}
 		;
-	
 
+stmtList ::= stmtList:sl stmt:s
+		{: sl.addToEnd(s);
+		   RESULT = sl;
+		:}
+		| /* epsilon */
+		{: RESULT = new Sequence();
+		:}
+		;
+
+		
+	
 type		::= INT
 		{: RESULT = new IntNode();
 		:}

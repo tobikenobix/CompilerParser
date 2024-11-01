@@ -1,0 +1,11 @@
+public class test {
+  static int a;
+  static boolean b;
+  public static a() {
+  }
+  public static funco(boolean c, int a, String b) {
+    String hello;
+    boolean isItTrue;
+    int numb;
+  }
+}
