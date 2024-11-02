@@ -652,6 +652,9 @@ class NotNode extends UnaryExpNode
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("!(");
+        myExp.decompile(p, indent);
+        p.print(")");
     }
 }
 
@@ -666,6 +669,12 @@ class PlusNode extends BinaryExpNode
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("(");
+        myExp1.decompile(p, indent);
+        p.print(" + ");
+        myExp2.decompile(p, indent);
+        p.print(")");
+
     }
 }
 
@@ -676,6 +685,11 @@ class MinusNode extends BinaryExpNode
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("(");
+        myExp1.decompile(p, indent);
+        p.print(" - ");
+        myExp2.decompile(p, indent);
+        p.print(")");
     }
 }
 
@@ -686,6 +700,11 @@ class TimesNode extends BinaryExpNode
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("(");
+        myExp1.decompile(p, indent);
+        p.print(" * ");
+        myExp2.decompile(p, indent);
+        p.print(")");
     }
 }
 
@@ -696,6 +715,11 @@ class DivideNode extends BinaryExpNode
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("(");
+        myExp1.decompile(p, indent);
+        p.print(" / ");
+        myExp2.decompile(p, indent);
+        p.print(")");
     }
 }
 
@@ -706,6 +730,11 @@ class AndNode extends BinaryExpNode
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("(");
+        myExp1.decompile(p, indent);
+        p.print(" && ");
+        myExp2.decompile(p, indent);
+        p.print(")");
     }
 }
 
@@ -716,6 +745,11 @@ class OrNode extends BinaryExpNode
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("(");
+        myExp1.decompile(p, indent);
+        p.print(" || ");
+        myExp2.decompile(p, indent);
+        p.print(")");
     }
 }
 

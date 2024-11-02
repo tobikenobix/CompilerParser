@@ -5,7 +5,7 @@ public class test {
     static boolean b;
     //test int function with no args
     public static int a (){
-        if(20) {
+        if(20 && 2 || 10) {
             a = 10;
         }
         test(5, 10);
@@ -17,7 +17,7 @@ public class test {
         String hello;
         boolean isItTrue;
         int numb;
-        numb = 20;
+        numb = 20 + 3 * 2;
         return;
     }
 
@@ -29,15 +29,16 @@ public class test {
     }
 
     public static void testIfElse(int j, int k) {
-        if(20) {
+        if(20+10) {
             a = 10;
             return;
         } else {
-            k = 20;
+            k = ! 20 - 1 / 2;
             return;
         }
         do{
             a = 14;
         } while(10)
+
     }
 }

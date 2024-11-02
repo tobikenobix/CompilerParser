@@ -219,7 +219,28 @@ stmt ::= PRINT LPAREN exp:e RPAREN SEMICOLON
 		:}
 		;
 
-exp ::=  INTLITERAL:il
+exp ::= exp:e PLUS exp:e2
+		{: RESULT = new PlusNode(e, e2);
+		:}
+		| exp:e MINUS exp:e2
+		{: RESULT = new MinusNode(e, e2);
+		:}
+		| exp:e TIMES exp:e2
+		{: RESULT = new TimesNode(e, e2);
+		:}
+		| exp:e DIVIDE exp:e2
+		{: RESULT = new DivideNode(e, e2);
+		:}
+		| NOT exp:e
+		{: RESULT = new NotNode(e);
+		:} 
+		| exp:e AND exp:e2
+		{: RESULT = new AndNode(e, e2);
+		:}
+		| exp:e OR exp:e2
+		{: RESULT = new OrNode(e, e2);
+		:}
+		| INTLITERAL:il
 		{: RESULT = new IntLitNode(il.linenum, il.charnum, il.intVal);
 		:}
 		;
