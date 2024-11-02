@@ -82,6 +82,7 @@ non terminal Sequence	  stmtList;
 non terminal StmtNode			stmt;
 non terminal ExpNode			exp;
 non terminal StringLitNode	str;
+non terminal Sequence	  actualList;
  
 /* Precedences */
 precedence left AND, OR;
@@ -201,11 +202,20 @@ stmt ::= PRINT LPAREN exp:e RPAREN SEMICOLON
 		| IF LPAREN exp:e RPAREN LCURLY stmtList:sl RCURLY ELSE LCURLY stmtList:sl2 RCURLY
 		{: RESULT = new IfElseStmtNode(e, new StmtListNode(sl), new StmtListNode(sl2)); //this is not good implementation style, if time left refactor yor stmtList to use constructor
 		:}
+		| DO LCURLY stmtList:sl RCURLY WHILE LPAREN exp:e RPAREN
+		{: RESULT = new WhileStmtNode(e, new StmtListNode(sl));
+		:}
 		| RETURN SEMICOLON
 		{: RESULT = new ReturnStmtNode();
 		:}
+		| RETURN exp:e SEMICOLON
+		{: RESULT = new ReturnWithValueNode(e);
+		:}
 		| id:i LPAREN RPAREN SEMICOLON
 		{: RESULT = new CallStmtNode(i);
+		:}
+		| id:i LPAREN actualList:al RPAREN SEMICOLON
+		{: RESULT = new CallStmtNode(i, new ExpListNode(al));
 		:}
 		;
 
@@ -214,6 +224,16 @@ exp ::=  INTLITERAL:il
 		:}
 		;
 
+actualList ::= exp:e
+		{: Sequence seq = new Sequence();
+		   seq.addToEnd(e);
+		   RESULT = seq;
+		:}
+		| exp:e COMMA actualList:al
+		{: al.addToFront(e);
+		   RESULT = al;
+		:}
+		;
 		
 	
 type		::= INT

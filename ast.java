@@ -230,6 +230,21 @@ class ExpListNode extends ASTnode {
 	myExps = S;
     }
     public void decompile(PrintWriter p, int indent) {
+        p.print("(");
+        boolean first = true;
+        try {
+            for (myExps.start(); myExps.isCurrent(); myExps.advance()) {
+                if (!first) {
+                    p.print(", ");
+                }
+                ((ExpNode)myExps.getCurrent()).decompile(p, indent);
+                first = false;
+            }
+        } catch (NoCurrentException ex) {
+            System.err.println("unexpected NoCurrentException in ExpListNode.print");
+            System.exit(-1);
+        }
+        p.print(")");
     }
 
     // sequence of kids (ExpNodes)
@@ -453,6 +468,12 @@ class WhileStmtNode extends StmtNode {
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.println("do {");
+        myStmtList.decompile(p, indent+2);
+        doIndent(p, indent);
+        p.print("} while (");
+        myExp.decompile(p, indent);
+        p.println(")");
     }
 
     // 2 kids
@@ -474,7 +495,8 @@ class CallStmtNode extends StmtNode {
     public void decompile(PrintWriter p, int indent) {
         myId.decompile(p, indent);
         myExpList.decompile(p, indent);
-        p.println("();");
+        p.println(";");
+        //p.println("();");
 
     }
 
@@ -490,6 +512,21 @@ class ReturnStmtNode extends StmtNode {
     public void decompile(PrintWriter p, int indent) {
         p.println("return;");
     }
+}
+// this helper class has been added by me to handle return statements with values
+class ReturnWithValueNode extends StmtNode {
+    public ReturnWithValueNode(ExpNode exp) {
+    myExp = exp;
+    }
+
+    public void decompile(PrintWriter p, int indent) {
+        p.print("return ");
+        myExp.decompile(p, indent);
+        p.println(";");
+    }
+
+    // 1 kid
+    private ExpNode myExp;
 }
 
 // **********************************************************************

@@ -5,6 +5,8 @@ public class test {
     if (20) {
       a = 10;
     }
+    test(5, 10);
+    test2();
   }
   public static funco(boolean c, int a, String b) {
     String hello;
@@ -17,7 +19,7 @@ public class test {
     String world;
     a();
     System.out.println(5);
-    return;
+    return 10;
   }
   public static testIfElse(int j, int k) {
     if (20) {
@@ -27,5 +29,8 @@ public class test {
       k = 20;
       return;
     }
+    do {
+      a = 14;
+    } while (10)
   }
 }
