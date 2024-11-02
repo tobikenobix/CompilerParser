@@ -3,6 +3,13 @@
 public class test {
     static int a;
     static boolean b;
+
+    public static int newTests(int number, boolean b){
+        if(10<=20){
+            b = 5==10 || 10>=5;
+            a =-10-3;
+        }
+    }    
     //test int function with no args
     public static int a (){
         if(20 && 2 || 10) {
@@ -19,6 +26,9 @@ public class test {
         int numb;
         numb = 20 + 3 * 2;
         return;
+        if (10 == 20){
+            k = 10 != 2;
+        }
     }
 
     public static int func2 (int j, int test) {

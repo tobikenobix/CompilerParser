@@ -240,6 +240,27 @@ exp ::= exp:e PLUS exp:e2
 		| exp:e OR exp:e2
 		{: RESULT = new OrNode(e, e2);
 		:}
+		| exp:e EQUALS exp:e2
+		{: RESULT = new EqualsNode(e, e2);
+		:}
+		| exp:e NOTEQUALS exp:e2
+		{: RESULT = new NotEqualsNode(e, e2);
+		:}
+		| exp:e LESS exp:e2
+		{: RESULT = new LessNode(e, e2);
+		:}
+		| exp:e GREATER exp:e2
+		{: RESULT = new GreaterNode(e, e2);
+		:}
+		| exp:e LESSEQ exp:e2
+		{: RESULT = new LessEqNode(e, e2);
+		:}
+		| exp:e GREATEREQ exp:e2
+		{: RESULT = new GreaterEqNode(e, e2);
+		:}
+		| MINUS exp:e
+		{: RESULT = new UnaryMinusNode(e);
+		:} %prec UMINUS
 		| INTLITERAL:il
 		{: RESULT = new IntLitNode(il.linenum, il.charnum, il.intVal);
 		:}

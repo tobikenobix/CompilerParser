@@ -642,6 +642,9 @@ class UnaryMinusNode extends UnaryExpNode
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("(-");
+        myExp.decompile(p, indent);
+        p.print(")");
     }
 }
 
@@ -760,6 +763,11 @@ class EqualsNode extends BinaryExpNode
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("(");
+        myExp1.decompile(p, indent);
+        p.print(" == ");
+        myExp2.decompile(p, indent);
+        p.print(")");
     }
 }
 
@@ -770,6 +778,11 @@ class NotEqualsNode extends BinaryExpNode
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("(");
+        myExp1.decompile(p, indent);
+        p.print(" != ");
+        myExp2.decompile(p, indent);
+        p.print(")");
     }
 }
 
@@ -780,6 +793,11 @@ class LessNode extends BinaryExpNode
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("(");
+        myExp1.decompile(p, indent);
+        p.print(" < ");
+        myExp2.decompile(p, indent);
+        p.print(")");
     }
 }
 
@@ -790,6 +808,11 @@ class GreaterNode extends BinaryExpNode
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("(");
+        myExp1.decompile(p, indent);
+        p.print(" > ");
+        myExp2.decompile(p, indent);
+        p.print(")");
     }
 }
 
@@ -800,6 +823,11 @@ class LessEqNode extends BinaryExpNode
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("(");
+        myExp1.decompile(p, indent);
+        p.print(" <= ");
+        myExp2.decompile(p, indent);
+        p.print(")");
     }
 }
 
@@ -810,5 +838,10 @@ class GreaterEqNode extends BinaryExpNode
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("(");
+        myExp1.decompile(p, indent);
+        p.print(" >= ");
+        myExp2.decompile(p, indent);
+        p.print(")");
     }
 }

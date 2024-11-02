@@ -1,6 +1,12 @@
 public class test {
   static int a;
   static boolean b;
+  public static newTests(int number, boolean b) {
+    if ((10 <= 20)) {
+      b = ((5 == 10) || (10 >= 5));
+      a = ((-10) - 3);
+    }
+  }
   public static a() {
     if (((20 && 2) || 10)) {
       a = 10;
@@ -14,6 +20,9 @@ public class test {
     int numb;
     numb = (20 + (3 * 2));
     return;
+    if ((10 == 20)) {
+      k = (10 != 2);
+    }
   }
   public static func2(int j, int test) {
     String world;
