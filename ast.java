@@ -560,6 +560,7 @@ class StringLitNode extends ExpNode {
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print(myStrVal);
     }
 
     private int myLineNum;
@@ -574,6 +575,7 @@ class TrueNode extends ExpNode {
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("true");
     }
 
     private int myLineNum;
@@ -587,6 +589,7 @@ class FalseNode extends ExpNode {
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("false");
     }
 
     private int myLineNum;
@@ -608,6 +611,28 @@ class IdNode extends ExpNode
     private int myLineNum;
     private int myCharNum;
     private String myStrVal;
+}
+
+// added by me to have a seperate node for function calls inside an expression
+class CallExpNode extends ExpNode {
+    public CallExpNode(IdNode id, ExpListNode elist) {
+	myId = id;
+	myExpList = elist;
+    }
+
+    public CallExpNode(IdNode id) {
+	myId = id;
+	myExpList = new ExpListNode(new Sequence());
+    }
+
+    public void decompile(PrintWriter p, int indent) {
+        myId.decompile(p, indent);
+        myExpList.decompile(p, indent);
+    }
+
+    // 2 kids
+    private IdNode myId;
+    private ExpListNode myExpList;
 }
 
 abstract class UnaryExpNode extends ExpNode {

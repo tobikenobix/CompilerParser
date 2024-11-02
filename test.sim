@@ -5,15 +5,18 @@ public class test {
     static boolean b;
 
     public static int newTests(int number, boolean b){
-        if(10<=20){
+        if(number<=20){
             b = 5==10 || 10>=5;
             a =-10-3;
         }
+        hello = "world";
+        b = true + funco(a,b);
+        b = false * test();
     }    
     //test int function with no args
     public static int a (){
         if(20 && 2 || 10) {
-            a = 10;
+            a = (-10 * 2) + 2;
         }
         test(5, 10);
         test2();

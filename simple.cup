@@ -261,8 +261,29 @@ exp ::= exp:e PLUS exp:e2
 		| MINUS exp:e
 		{: RESULT = new UnaryMinusNode(e);
 		:} %prec UMINUS
+		| ID:i 
+		{: RESULT = new IdNode(i.linenum, i.charnum, i.idVal);
+		:}
 		| INTLITERAL:il
 		{: RESULT = new IntLitNode(il.linenum, il.charnum, il.intVal);
+		:}
+		| STRINGLITERAL:sl
+		{: RESULT = new StringLitNode(sl.linenum, sl.charnum, sl.stringVal);
+		:}
+		| TRUE:t
+		{: RESULT = new TrueNode(t.linenum, t.charnum);
+		:}
+		| FALSE:f
+		{: RESULT = new FalseNode(f.linenum, f.charnum);
+		:}
+		| LPAREN exp:e RPAREN
+		{: RESULT = e;
+		:}
+		| id:i LPAREN RPAREN
+		{: RESULT = new CallExpNode(i);
+		:}
+		| id:i LPAREN actualList:al RPAREN
+		{: RESULT = new CallExpNode(i, new ExpListNode(al));
 		:}
 		;
 
