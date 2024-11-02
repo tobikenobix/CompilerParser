@@ -7,5 +7,11 @@ public class test {
     String hello;
     boolean isItTrue;
     int numb;
+    return;
+  }
+  public static func2(int j, int test) {
+    String world;
+    a();
+    return;
   }
 }

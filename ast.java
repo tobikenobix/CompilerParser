@@ -210,6 +210,15 @@ class StmtListNode extends ASTnode {
     }
 
     public void decompile(PrintWriter p, int indent) {
+        try {
+            for (myStmts.start(); myStmts.isCurrent(); myStmts.advance()) {
+                doIndent(p, indent);
+                ((StmtNode)myStmts.getCurrent()).decompile(p, indent);
+            }
+        } catch (NoCurrentException ex) {
+            System.err.println("unexpected NoCurrentException in StmtListNode.print");
+            System.exit(-1);
+        }
     }
 
     // sequence of kids (StmtNodes)
@@ -441,6 +450,10 @@ class CallStmtNode extends StmtNode {
     }
 
     public void decompile(PrintWriter p, int indent) {
+        myId.decompile(p, indent);
+        myExpList.decompile(p, indent);
+        p.println("();");
+
     }
 
     // 2 kids
@@ -453,7 +466,7 @@ class ReturnStmtNode extends StmtNode {
     }
 
     public void decompile(PrintWriter p, int indent) {
-        p.println("return");
+        p.println("return;");
     }
 }
 

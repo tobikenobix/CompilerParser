@@ -78,8 +78,8 @@ non terminal Sequence		  formalsList;
 non terminal MethodBodyNode   methodBody;
 non terminal Sequence		  varDeclList;
 non terminal VarDeclNode	  varDecl;
-non terminal Sequence		  stmtList;
-non terminal StmtNode		stmt;
+non terminal Sequence	  stmtList;
+non terminal StmtNode			stmt;
  
 /* Precedences */
 precedence left AND, OR;
@@ -159,7 +159,6 @@ formalDecl ::= type:t id:i
              :}
              ;
 
-//this does not work yet since stamtement list is not defined yet
 methodBody ::= LCURLY  varDeclList:vdl stmtList:sl RCURLY
 		{: RESULT = new MethodBodyNode(new DeclListNode(vdl), new StmtListNode(sl));
 		:}
@@ -185,6 +184,14 @@ stmtList ::= stmtList:sl stmt:s
 		:}
 		| /* epsilon */
 		{: RESULT = new Sequence();
+		:}
+		;
+
+stmt ::= RETURN SEMICOLON
+		{: RESULT = new ReturnStmtNode();
+		:}
+		| id:i LPAREN RPAREN SEMICOLON
+		{: RESULT = new CallStmtNode(i);
 		:}
 		;
 

@@ -12,5 +12,12 @@ public class test {
         String hello;
         boolean isItTrue;
         int numb;
+        return;
+    }
+
+    public static int func2 (int j, int test) {
+        String world;
+        a();
+        return; 
     }
 }
