@@ -80,6 +80,8 @@ non terminal Sequence		  varDeclList;
 non terminal VarDeclNode	  varDecl;
 non terminal Sequence	  stmtList;
 non terminal StmtNode			stmt;
+non terminal ExpNode			exp;
+non terminal StringLitNode	str;
  
 /* Precedences */
 precedence left AND, OR;
@@ -187,11 +189,28 @@ stmtList ::= stmtList:sl stmt:s
 		:}
 		;
 
-stmt ::= RETURN SEMICOLON
+stmt ::= PRINT LPAREN exp:e RPAREN SEMICOLON
+		{: RESULT = new PrintStmtNode(e);
+		:}
+		| id:i ASSIGN exp:e SEMICOLON
+		{: RESULT = new AssignStmtNode(i, e);
+		:}
+		| IF LPAREN exp:e RPAREN LCURLY stmtList:sl RCURLY
+		{: RESULT = new IfStmtNode(e, new StmtListNode(sl));
+		:}
+		| IF LPAREN exp:e RPAREN LCURLY stmtList:sl RCURLY ELSE LCURLY stmtList:sl2 RCURLY
+		{: RESULT = new IfElseStmtNode(e, new StmtListNode(sl), new StmtListNode(sl2)); //this is not good implementation style, if time left refactor yor stmtList to use constructor
+		:}
+		| RETURN SEMICOLON
 		{: RESULT = new ReturnStmtNode();
 		:}
 		| id:i LPAREN RPAREN SEMICOLON
 		{: RESULT = new CallStmtNode(i);
+		:}
+		;
+
+exp ::=  INTLITERAL:il
+		{: RESULT = new IntLitNode(il.linenum, il.charnum, il.intVal);
 		:}
 		;
 

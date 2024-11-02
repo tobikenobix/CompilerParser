@@ -373,6 +373,9 @@ class PrintStmtNode extends StmtNode {
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("System.out.println(");
+        myExp.decompile(p, indent);
+        p.println(");");
     }
 
     // 1 kid
@@ -386,6 +389,10 @@ class AssignStmtNode extends StmtNode {
     }
 
     public void decompile(PrintWriter p, int indent) {
+        myId.decompile(p, indent);
+        p.print(" = ");
+        myExp.decompile(p, indent);
+        p.println(";");
     }
 
     // 2 kids
@@ -400,6 +407,12 @@ class IfStmtNode extends StmtNode {
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("if (");
+        myExp.decompile(p, indent);
+        p.println(") {");
+        myStmtList.decompile(p, indent+2);
+        doIndent(p, indent);
+        p.println("}");
     }
 
     // 2 kids
@@ -416,6 +429,15 @@ class IfElseStmtNode extends StmtNode {
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print("if (");
+        myExp.decompile(p, indent);
+        p.println(") {");
+        myThenStmtList.decompile(p, indent+2);
+        doIndent(p, indent);
+        p.println("} else {");
+        myElseStmtList.decompile(p, indent+2);
+        doIndent(p, indent);
+        p.println("}");
     }
 
     // 3 kids
@@ -485,6 +507,7 @@ class IntLitNode extends ExpNode {
     }
 
     public void decompile(PrintWriter p, int indent) {
+        p.print(myIntVal);
     }
 
     private int myLineNum;

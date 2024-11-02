@@ -2,16 +2,30 @@ public class test {
   static int a;
   static boolean b;
   public static a() {
+    if (20) {
+      a = 10;
+    }
   }
   public static funco(boolean c, int a, String b) {
     String hello;
     boolean isItTrue;
     int numb;
+    numb = 20;
     return;
   }
   public static func2(int j, int test) {
     String world;
     a();
+    System.out.println(5);
     return;
+  }
+  public static testIfElse(int j, int k) {
+    if (20) {
+      a = 10;
+      return;
+    } else {
+      k = 20;
+      return;
+    }
   }
 }

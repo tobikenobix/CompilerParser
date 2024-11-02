@@ -5,6 +5,9 @@ public class test {
     static boolean b;
     //test int function with no args
     public static int a (){
+        if(20) {
+            a = 10;
+        }
 
     }
     //test void function with args
@@ -12,12 +15,24 @@ public class test {
         String hello;
         boolean isItTrue;
         int numb;
+        numb = 20;
         return;
     }
 
     public static int func2 (int j, int test) {
         String world;
         a();
+        System.out.println(5);
         return; 
+    }
+
+    public static void testIfElse(int j, int k) {
+        if(20) {
+            a = 10;
+            return;
+        } else {
+            k = 20;
+            return;
+        }
     }
 }
