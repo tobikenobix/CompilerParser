@@ -1,7 +1,7 @@
 public class test {
   static int a;
   static boolean b;
-  public static newTests(int number, boolean b) {
+  public static int newTests (int number, boolean b) {
     if ((number <= 20)) {
       b = ((5 == 10) || (10 >= 5));
       a = ((-10) - 3);
@@ -10,14 +10,14 @@ public class test {
     b = (true + funco(a, b));
     b = (false * test());
   }
-  public static a() {
+  public static int a () {
     if (((20 && 2) || 10)) {
       a = (((-10) * 2) + 2);
     }
     test(5, 10);
     test2();
   }
-  public static funco(boolean c, int a, String b) {
+  public static void funco (boolean c, int a, String b) {
     String hello;
     boolean isItTrue;
     int numb;
@@ -27,13 +27,13 @@ public class test {
       k = (10 != 2);
     }
   }
-  public static func2(int j, int test) {
+  public static int func2 (int j, int test) {
     String world;
     a();
     System.out.println(5);
     return 10;
   }
-  public static testIfElse(int j, int k) {
+  public static void testIfElse (int j, int k) {
     if ((20 + 10)) {
       a = 10;
       return;

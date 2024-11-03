@@ -134,7 +134,7 @@ fieldDecl	::= STATIC type:t id:i SEMICOLON
 		{: RESULT = new MethodDeclNode(i, f, mb);
 		:}
 		| PUBLIC STATIC INT id:i formals:f methodBody:mb
-		{: RESULT = new MethodDeclNode(i, f, mb);
+		{: RESULT = new MethodDeclNodeInt(i, f, mb);
 		:}
 		;
 

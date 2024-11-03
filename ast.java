@@ -167,7 +167,7 @@ class FormalsListNode extends ASTnode {
     }
 
     public void decompile(PrintWriter p, int indent) {
-        p.print("(");
+        p.print(" (");
         boolean first = true;
         try {
             for (myFormals.start(); myFormals.isCurrent(); myFormals.advance()) {
@@ -306,7 +306,34 @@ class MethodDeclNode extends DeclNode {
 
     public void decompile(PrintWriter p, int indent) {
         doIndent(p, indent);
-        p.print("public static ");
+        p.print("public static void ");
+        myId.decompile(p, indent);
+        myFormalsList.decompile(p, indent);
+        p.println(" {");
+        myBody.decompile(p, indent+2);
+        doIndent(p, indent);
+        p.println("}");
+    }
+
+    // 3 kids
+    private IdNode myId;
+    private FormalsListNode myFormalsList;
+    private MethodBodyNode myBody;
+}
+
+// added this to print out the method declaration for int return type. Might consider extending the original MethodDeclNode class to have a return type field
+class MethodDeclNodeInt extends MethodDeclNode {
+    public MethodDeclNodeInt(IdNode id, FormalsListNode formalList, MethodBodyNode body) {
+                super(id,formalList,body);
+	myId = id;
+	myFormalsList = formalList;
+	myBody = body;
+    
+    }
+
+    public void decompile(PrintWriter p, int indent) {
+        doIndent(p, indent);
+        p.print("public static int ");
         myId.decompile(p, indent);
         myFormalsList.decompile(p, indent);
         p.println(" {");
