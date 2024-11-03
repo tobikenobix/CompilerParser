@@ -17,6 +17,16 @@ public class test {
     test(5, 10);
     test2();
   }
+  public static void isThisWorking () {
+    switch ((b < 5)) {
+      case true:
+        b = 10;
+      case false:
+        b = (-10);
+      default:
+        return a;
+    }
+  }
   public static void funco (boolean c, int a, String b) {
     String hello;
     boolean isItTrue;
@@ -30,7 +40,7 @@ public class test {
   public static int func2 (int j, int test) {
     String world;
     a();
-    System.out.println(5);
+    System.out.println("This is a String");
     return 10;
   }
   public static void testIfElse (int j, int k) {

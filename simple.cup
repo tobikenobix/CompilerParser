@@ -85,6 +85,9 @@ non terminal StmtNode			stmt;
 non terminal ExpNode			exp;
 non terminal StringLitNode	str;
 non terminal Sequence	  actualList;
+non terminal SwitchLabelNode  switchLabel;
+non terminal SwitchGroupNode  switchGroup;
+non terminal Sequence		  switchGroupList;
  
 /* Precedences */
 precedence left AND, OR;
@@ -192,6 +195,28 @@ stmtList ::= stmtList:sl stmt:s
 		:}
 		;
 
+switchGroupList ::= switchGroupList:sl switchGroup:sg
+		{: sl.addToEnd(sg);
+		   RESULT = sl;
+		:}
+		| /* epsilon */
+		{: RESULT = new Sequence();
+		:}
+		;
+
+switchGroup ::= switchLabel:sl stmtList:sl2
+		{: RESULT = new SwitchGroupNode(sl, new StmtListNode(sl2));
+		:}
+		;
+
+switchLabel ::= CASE exp:e COLON
+		{: RESULT = new SwitchLabelNodeCase(e);
+		:}
+		| DEFAULT COLON
+		{: RESULT = new SwitchLabelNodeDefault();
+		:}
+		;
+
 stmt ::= PRINT LPAREN exp:e RPAREN SEMICOLON
 		{: RESULT = new PrintStmtNode(e);
 		:}
@@ -218,6 +243,9 @@ stmt ::= PRINT LPAREN exp:e RPAREN SEMICOLON
 		:}
 		| id:i LPAREN actualList:al RPAREN SEMICOLON
 		{: RESULT = new CallStmtNode(i, new ExpListNode(al));
+		:}
+		| SWITCH LPAREN exp:e RPAREN LCURLY switchGroupList:sg RCURLY
+		{: RESULT = new SwitchStmtNode(e, new SwitchGroupListNode(sg));
 		:}
 		;
 

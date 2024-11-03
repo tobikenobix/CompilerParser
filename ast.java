@@ -251,6 +251,26 @@ class ExpListNode extends ASTnode {
     private Sequence myExps;
 }
 
+class SwitchGroupListNode extends ASTnode {
+    public SwitchGroupListNode(Sequence S) {
+        mySwitchGroups = S;
+    }
+
+    public void decompile(PrintWriter p, int indent) {
+        try {
+            for (mySwitchGroups.start(); mySwitchGroups.isCurrent(); mySwitchGroups.advance()) {
+                ((SwitchGroupNode)mySwitchGroups.getCurrent()).decompile(p, indent);
+            }
+        } catch (NoCurrentException ex) {
+            System.err.println("unexpected NoCurrentException in SwitchGroupList.print");
+            System.exit(-1);
+        }
+    }
+
+    // sequence of kids (SwitchGroupNodes)
+    private Sequence mySwitchGroups;
+}
+
 // **********************************************************************
 // DeclNode and its subclasses
 // **********************************************************************
@@ -400,6 +420,54 @@ class StringNode extends TypeNode
     public void decompile(PrintWriter p, int indent) {
         p.print("String");
     }
+}
+
+// **********************************************************************
+// SwitchLabelNode and its Subclasses
+// **********************************************************************
+abstract class SwitchLabelNode extends ASTnode {
+}
+
+class SwitchLabelNodeCase extends SwitchLabelNode {
+    public SwitchLabelNodeCase(ExpNode exp) {
+        myExp = exp;
+    }
+
+    public void decompile(PrintWriter p, int indent) {
+        doIndent(p, indent);
+        p.print("case ");
+        myExp.decompile(p, indent);
+        p.println(":");
+    }
+    // 1 kid
+    private ExpNode myExp;
+}
+
+class SwitchLabelNodeDefault extends SwitchLabelNode {
+    public SwitchLabelNodeDefault() {
+    }
+
+    public void decompile(PrintWriter p, int indent) {
+        doIndent(p, indent);
+        p.println("default:");
+    }
+}
+// **********************************************************************
+// SwitchGroupNode
+// **********************************************************************
+
+class SwitchGroupNode extends ASTnode {
+    public SwitchGroupNode(SwitchLabelNode sLabelNode,StmtListNode slist) {
+        myStmtList = slist;
+        mySwitchLabelNode = sLabelNode;
+    }
+    public void decompile(PrintWriter p, int indent) {
+        mySwitchLabelNode.decompile(p, indent);
+        myStmtList.decompile(p, indent+2);
+    }
+    // 2 kids
+    private StmtListNode myStmtList;
+    private SwitchLabelNode mySwitchLabelNode;
 }
 
 // **********************************************************************
@@ -554,6 +622,26 @@ class ReturnWithValueNode extends StmtNode {
 
     // 1 kid
     private ExpNode myExp;
+}
+
+class SwitchStmtNode extends StmtNode {
+    public SwitchStmtNode(ExpNode exp, SwitchGroupListNode sgl) {
+        myExp = exp;
+        mySwitchGroupList = sgl;
+    }
+
+    public void decompile(PrintWriter p, int indent) {
+        p.print("switch (");
+        myExp.decompile(p, indent);
+        p.println(") {");
+        mySwitchGroupList.decompile(p, indent+2);
+        doIndent(p, indent);
+        p.println("}");
+    }
+
+    // 2 kids
+    private ExpNode myExp;
+    private SwitchGroupListNode mySwitchGroupList;
 }
 
 // **********************************************************************
@@ -898,7 +986,7 @@ class GreaterEqNode extends BinaryExpNode
     }
 }
 
-//added by me to handle exp to the power of exp
+//added to handle exp to the power of exp
 class PowerNode extends BinaryExpNode
 {
     public PowerNode(ExpNode exp1, ExpNode exp2) {

@@ -22,6 +22,15 @@ public class test {
         test2();
 
     }
+
+    //test switch case
+    public static void isThisWorking(){
+        switch(b < 5){
+            case true: b = 10;
+            case false: b = -10;
+            default: return a;
+        }
+    }
     //test void function with args
     public static void funco (boolean c, int a, String b) {
         String hello;
@@ -37,7 +46,7 @@ public class test {
     public static int func2 (int j, int test) {
         String world;
         a();
-        System.out.println(5);
+        System.out.println("This is a String");
         return 10; 
     }
 
