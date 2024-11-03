@@ -25,11 +25,13 @@ import java.io.*;
 //     MethodBodyNode      DeclListNode, StmtListNode
 //     StmtListNode        sequence of StmtNode
 //     ExpListNode         sequence of ExpNode
+//     SwitchGroupListNode sequence of SwitchGroupNode
 //
 //     DeclNode:
 //       FieldDeclNode     TypeNode, IdNode
 //       VarDeclNode       TypeNode, IdNode
 //       MethodDeclNode    IdNode, FormalsListNode, MethodBodyNode
+//       MethodDeclNodeInt IdNode, FormalsListNode, MethodBodyNode
 //       FormalDeclNode    TypeNode, IdNode
 //
 //     TypeNode:
@@ -45,6 +47,17 @@ import java.io.*;
 //       WhileStmtNode       ExpNode, StmtListNode
 //       CallStmtNode        IdNode, ExpListNode
 //       ReturnStmtNode      -- none --
+//       ReturnWithValueNode ExpNode
+//
+//       BlockStmtNode       DeclListNode, StmtListNode
+//       SwitchStmtNode      ExpNode, SwitchGroupListNode
+//      
+//     SwitchLabelNode:
+//       SwitchLabelNodeCase  ExpNode
+//       SwitchLabelNodeDefault -- none --
+//
+//     SwitchGroupNode:
+//       SwitchGroupNode      SwitchLabelNode, StmtListNode
 //
 //     ExpNode:
 //       IntLitNode          -- none --
@@ -52,6 +65,7 @@ import java.io.*;
 //       TrueNode            -- none --
 //       FalseNode           -- none --
 //       IdNode              -- none --
+//       CallExpNode         IdNode, ExpListNode
 //       UnaryExpNode        ExpNode
 //         UnaryMinusNode
 //         NotNode
@@ -68,6 +82,7 @@ import java.io.*;
 //         GreaterNode
 //         LessEqNode
 //         GreaterEqNode
+//         PowerNode
 //
 // Here are the different kinds of AST nodes again, organized according to
 // whether they are leaves, internal nodes with sequences of kids, or internal
