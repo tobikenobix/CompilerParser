@@ -58,6 +58,8 @@ terminal TokenVal	    SWITCH;
 terminal TokenVal	    CASE;
 terminal TokenVal	    DEFAULT;
 terminal TokenVal	    UMINUS;
+terminal TokenVal 	  	POWER;
+terminal TokenVal		COLON;
 
 /* Non-terminals
  *
@@ -89,7 +91,7 @@ precedence left AND, OR;
 precedence nonassoc EQUALS, NOTEQUALS, LESS, GREATER, LESSEQ, GREATEREQ;
 precedence left PLUS, MINUS;
 precedence left TIMES, DIVIDE;
-precedence right NOT, UMINUS;
+precedence right NOT, POWER, UMINUS;
 
 start with program;
 
@@ -257,6 +259,9 @@ exp ::= exp:e PLUS exp:e2
 		:}
 		| exp:e GREATEREQ exp:e2
 		{: RESULT = new GreaterEqNode(e, e2);
+		:}
+		| exp:e POWER exp:e2
+		{: RESULT = new PowerNode(e, e2);
 		:}
 		| MINUS exp:e
 		{: RESULT = new UnaryMinusNode(e);

@@ -897,3 +897,18 @@ class GreaterEqNode extends BinaryExpNode
         p.print(")");
     }
 }
+
+//added by me to handle exp to the power of exp
+class PowerNode extends BinaryExpNode
+{
+    public PowerNode(ExpNode exp1, ExpNode exp2) {
+        super(exp1, exp2);
+    }
+    public void decompile(PrintWriter p, int indent) {
+        p.print("(");
+        myExp1.decompile(p, indent);
+        p.print("**");
+        myExp2.decompile(p, indent);
+        p.print(")");
+    }
+}

@@ -7,6 +7,7 @@
 public class sym {
   /* terminals */
   public static final int DIVIDE = 30;
+  public static final int POWER = 44;
   public static final int EQUALS = 34;
   public static final int UMINUS = 43;
   public static final int CASE = 41;
@@ -39,6 +40,7 @@ public class sym {
   public static final int RCURLY = 21;
   public static final int INTLITERAL = 18;
   public static final int TIMES = 29;
+  public static final int COLON = 45;
   public static final int ELSE = 12;
   public static final int NOTEQUALS = 35;
   public static final int WHILE = 13;
@@ -94,7 +96,9 @@ public class sym {
   "SWITCH",
   "CASE",
   "DEFAULT",
-  "UMINUS"
+  "UMINUS",
+  "POWER",
+  "COLON"
   };
 }
 

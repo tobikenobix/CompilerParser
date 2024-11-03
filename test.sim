@@ -16,7 +16,7 @@ public class test {
     //test int function with no args
     public static int a (){
         if(20 && 2 || 10) {
-            a = (-10 * 2) + 2;
+            a = (-10 * 2) + 2**3;
         }
         test(5, 10);
         test2();

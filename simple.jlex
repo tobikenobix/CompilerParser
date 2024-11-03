@@ -61,7 +61,7 @@ RESERVED_WORDS= String|System.out.println|boolean|class|do|else|false|if|int|pub
 IDENTIFIER= [a-zA-Z][a-zA-Z0-9_]*
 STRING_LITERAL= \"([^\\\"\n]|\\[ntr\"\\])*\" 
 COMMENT_SINGLE_LINE= \/\/.*
-SYMBOLS= \{|\}|\(|\)|,|=|;|\+|-|\*|\/|\!|&&|\|\||==|\!=|>|<|<=|>=
+SYMBOLS= \{|\}|\(|\)|,|=|;|\+|-|\*\*|\*|\/|\!|&&|\|\||==|\!=|>|<|<=|>=|:
 
 
 // The next 3 lines are included so that we can use the generated scanner
@@ -166,11 +166,13 @@ return new Symbol(sym.EOF);
 		case "}": symb = sym.RCURLY;break;
 		case "(": symb = sym.LPAREN;break;
 		case ")": symb = sym.RPAREN;break;
+		case ":": symb = sym.COLON;break;
 		case ",": symb = sym.COMMA; break;
 		case "=": symb = sym.ASSIGN; break;
 		case ";": symb = sym.SEMICOLON; break;
 		case "+": symb = sym.PLUS; break;
 		case "-": symb = sym.MINUS; break;
+		case "**": symb = sym.POWER; break;
 		case "*": symb = sym.TIMES; break;
 		case "/": symb = sym.DIVIDE; break;
 		case "!": symb = sym.NOT; break;
