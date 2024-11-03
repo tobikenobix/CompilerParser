@@ -107,7 +107,7 @@ abstract class ASTnode {
 
 // **********************************************************************
 // ProgramNode, ClassBodyNode, DeclListNode, FormalsListNode,
-// MethodBodyNode, StmtListNode, ExpListNode
+// MethodBodyNode, StmtListNode, ExpListNode, SwitchGroupListNode
 // **********************************************************************
 class ProgramNode extends ASTnode {
     public ProgramNode(IdNode id, ClassBodyNode classBody) {
@@ -608,7 +608,7 @@ class ReturnStmtNode extends StmtNode {
         p.println("return;");
     }
 }
-// this helper class has been added by me to handle return statements with values
+// this helper class has been added to handle return statements with values
 class ReturnWithValueNode extends StmtNode {
     public ReturnWithValueNode(ExpNode exp) {
     myExp = exp;
@@ -622,6 +622,23 @@ class ReturnWithValueNode extends StmtNode {
 
     // 1 kid
     private ExpNode myExp;
+}
+// added to handle nested blocks
+class BlockStmtNode extends StmtNode {
+    public BlockStmtNode(DeclListNode varDecls, StmtListNode stmts) {
+        myVarDecls = varDecls;
+        myStmts = stmts;
+    }
+    public void decompile(PrintWriter p, int indent) {
+        p.println("{");
+        myVarDecls.decompile(p, indent+2);
+        myStmts.decompile(p, indent+2);
+        doIndent(p, indent);
+        p.println("}");
+    }
+    // 2 kids
+    private DeclListNode myVarDecls;
+    private StmtListNode myStmts;
 }
 
 class SwitchStmtNode extends StmtNode {

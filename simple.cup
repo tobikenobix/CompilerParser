@@ -83,7 +83,6 @@ non terminal VarDeclNode	  varDecl;
 non terminal Sequence	  stmtList;
 non terminal StmtNode			stmt;
 non terminal ExpNode			exp;
-non terminal StringLitNode	str;
 non terminal Sequence	  actualList;
 non terminal SwitchLabelNode  switchLabel;
 non terminal SwitchGroupNode  switchGroup;
@@ -227,7 +226,7 @@ stmt ::= PRINT LPAREN exp:e RPAREN SEMICOLON
 		{: RESULT = new IfStmtNode(e, new StmtListNode(sl));
 		:}
 		| IF LPAREN exp:e RPAREN LCURLY stmtList:sl RCURLY ELSE LCURLY stmtList:sl2 RCURLY
-		{: RESULT = new IfElseStmtNode(e, new StmtListNode(sl), new StmtListNode(sl2)); //this is not good implementation style, if time left refactor yor stmtList to use constructor
+		{: RESULT = new IfElseStmtNode(e, new StmtListNode(sl), new StmtListNode(sl2));
 		:}
 		| DO LCURLY stmtList:sl RCURLY WHILE LPAREN exp:e RPAREN
 		{: RESULT = new WhileStmtNode(e, new StmtListNode(sl));
@@ -243,6 +242,9 @@ stmt ::= PRINT LPAREN exp:e RPAREN SEMICOLON
 		:}
 		| id:i LPAREN actualList:al RPAREN SEMICOLON
 		{: RESULT = new CallStmtNode(i, new ExpListNode(al));
+		:}
+		| LCURLY varDeclList:vdl stmtList:sl RCURLY
+		{: RESULT = new BlockStmtNode(new DeclListNode(vdl), new StmtListNode(sl));
 		:}
 		| SWITCH LPAREN exp:e RPAREN LCURLY switchGroupList:sg RCURLY
 		{: RESULT = new SwitchStmtNode(e, new SwitchGroupListNode(sg));
