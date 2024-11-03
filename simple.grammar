@@ -1,5 +1,6 @@
 /**********************************************************************
- Grammar for Simple programs 2021-05-05a
+ Grammar for Simple programs version 3
+Last modification: Tue Oct 29 10:14:48 UTC 2024
  **********************************************************************/
 program		::= PUBLIC CLASS id LCURLY classBody RCURLY
 		;
@@ -46,6 +47,20 @@ stmtList	::= stmtList stmt
 		| /* epsilon */
 		;
 
+
+/* the following rules are for the switch / case statement */
+
+switchGroupList   ::= switchGroupList switchGroup
+		| /* epsilon */
+		;
+
+switchGroup	::=   switchLabel stmtList
+		;
+
+switchLabel	::=   CASE exp COLON
+		|     DEFAULT COLON
+		;      
+		     
 stmt		::= PRINT LPAREN exp RPAREN SEMICOLON
 	        | id ASSIGN exp SEMICOLON
 	        | IF LPAREN exp RPAREN LCURLY stmtList RCURLY
@@ -56,6 +71,7 @@ stmt		::= PRINT LPAREN exp RPAREN SEMICOLON
 	        | id LPAREN RPAREN SEMICOLON  	  // function call with no args
 	        | id LPAREN actualList RPAREN SEMICOLON // with args
 		| LCURLY varDeclList stmtList RCURLY  // nested block
+		| SWITCH LPAREN exp RPAREN LCURLY switchGroupList RCURLY
 		;
 
 exp		::= exp PLUS exp
@@ -80,8 +96,8 @@ exp		::= exp PLUS exp
 	        | TRUE
 	        | FALSE
 	        | LPAREN exp RPAREN
-	        | id LPAREN RPAREN SEMICOLON  	  // function call with no args
-	        | id LPAREN actualList RPAREN SEMICOLON // with args
+	        | id LPAREN RPAREN   	      // function call with no args
+	        | id LPAREN actualList RPAREN // with args
 		
 		;
 
